@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Avantepack — Descartáveis e Utilidades</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --verde:        #1B5E20;
+    --verde2:       #2E7D32;
+    --verde3:       #43A047;
+    --verde-claro:  #E8F5E9;
+    --branco:       #FFFFFF;
+    --cinza:        #F5F5F5;
+    --texto:        #1C1C1C;
+    --borda:        #C8E6C9;
+    --muted:        #555;
+  }
+
+  body { font-family: 'Inter', sans-serif; color: var(--texto); background: var(--branco); overflow-x: hidden; }
+
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--verde);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 3rem; height: 64px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+  }
+  .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.4rem; color: var(--branco); letter-spacing: -0.01em; }
+  .logo span { color: #A5D6A7; }
+  .nav-links { list-style: none; display: flex; gap: 2rem; align-items: center; }
+  .nav-links a { font-size: 0.82rem; font-weight: 500; color: rgba(255,255,255,0.8); text-decoration: none; letter-spacing: 0.04em; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--branco); }
+  .nav-cta { background: var(--branco) !important; color: var(--verde) !important; padding: 0.45rem 1.1rem; border-radius: 3px; font-weight: 600 !important; }
+  .nav-cta:hover { background: #E8F5E9 !important; }
+
+  .hero {
+    background: var(--verde);
+    min-height: 460px;
+    display: grid; grid-template-columns: 1fr 1fr;
+    align-items: center; gap: 2rem;
+    padding: 5rem 3rem 4rem;
+    position: relative; overflow: hidden;
+  }
+  .hero::before { content:''; position:absolute; right:-60px; bottom:-80px; width:420px; height:420px; border-radius:50%; background:radial-gradient(circle,rgba(255,255,255,0.06) 0%,transparent 70%); }
+  .hero-badge { display:inline-flex; align-items:center; gap:0.4rem; font-size:0.72rem; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:#A5D6A7; border:1px solid rgba(165,214,167,0.4); padding:0.3rem 0.9rem; border-radius:2rem; margin-bottom:1.5rem; }
+  .hero h1 { font-family:'Syne',sans-serif; font-size:clamp(2rem,4vw,3.2rem); font-weight:800; color:var(--branco); line-height:1.1; margin-bottom:1.2rem; letter-spacing:-0.02em; }
+  .hero h1 em { font-style:normal; color:#A5D6A7; }
+  .hero p { color:rgba(255,255,255,0.7); font-size:1rem; line-height:1.65; max-width:420px; }
+  .hero-texto { position:relative; z-index:1; }
+  .hero-visual { display:flex; justify-content:center; align-items:center; position:relative; z-index:1; }
+  .hero-grid-boxes { display:grid; grid-template-columns:1fr 1fr; gap:1rem; max-width:300px; }
+  .hbox { background:rgba(255,255,255,0.09); border:1px solid rgba(255,255,255,0.15); border-radius:8px; padding:1.4rem 1rem; text-align:center; color:var(--branco); transition:background 0.2s; }
+  .hbox:hover { background:rgba(255,255,255,0.14); }
+  .hbox .emoji { font-size:2.2rem; display:block; margin-bottom:0.5rem; }
+  .hbox .label { font-size:0.72rem; color:rgba(255,255,255,0.65); font-weight:500; }
+  .hbox:nth-child(2) { margin-top:1.5rem; }
+  .hbox:nth-child(4) { margin-top:-1.5rem; }
+
+  .numeros { background:var(--verde2); display:flex; justify-content:space-around; flex-wrap:wrap; padding:2.5rem 3rem; gap:1rem; }
+  .num-item { text-align:center; color:var(--branco); padding:0.5rem 1rem; }
+  .num-val { font-family:'Syne',sans-serif; font-size:2.4rem; font-weight:800; line-height:1; display:block; margin-bottom:0.3rem; }
+  .num-label { font-size:0.78rem; opacity:0.8; }
+
+  .secao { padding:5rem 3rem; max-width:1200px; margin:0 auto; }
+  .sec-label { font-size:0.7rem; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; color:var(--verde2); margin-bottom:0.6rem; }
+  .sec-titulo { font-family:'Syne',sans-serif; font-size:clamp(1.6rem,3vw,2.2rem); font-weight:800; color:var(--verde); line-height:1.15; margin-bottom:0.8rem; letter-spacing:-0.01em; }
+  .sec-desc { color:var(--muted); font-size:0.95rem; line-height:1.7; max-width:520px; margin-bottom:2.5rem; }
+
+  .filtros { display:flex; gap:0.6rem; flex-wrap:wrap; margin-bottom:2rem; }
+  .filtro-btn { background:transparent; border:1.5px solid var(--borda); color:#555; padding:0.4rem 1rem; border-radius:2rem; font-family:'Inter',sans-serif; font-size:0.78rem; font-weight:500; cursor:pointer; transition:all 0.18s; }
+  .filtro-btn.ativo, .filtro-btn:hover { background:var(--verde); color:var(--branco); border-color:var(--verde); }
+
+  .produtos-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:1.25rem; }
+  .prod-card { border:1.5px solid var(--borda); border-radius:8px; overflow:hidden; transition:transform 0.2s,box-shadow 0.2s,border-color 0.2s; background:var(--branco); }
+  .prod-card:hover { transform:translateY(-4px); box-shadow:0 10px 28px rgba(27,94,32,0.12); border-color:var(--verde3); }
+  .prod-topo { background:var(--verde-claro); padding:1.8rem 2rem; text-align:center; font-size:2.8rem; line-height:1; }
+  .prod-corpo { padding:1rem 1.2rem 1.3rem; }
+  .prod-tag { font-size:0.65rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--verde2); margin-bottom:0.3rem; }
+  .prod-nome { font-family:'Syne',sans-serif; font-size:0.94rem; font-weight:700; color:var(--verde); margin-bottom:0.35rem; line-height:1.2; }
+  .prod-desc { font-size:0.78rem; color:#666; line-height:1.55; margin-bottom:1rem; }
+  .prod-btn { width:100%; background:var(--verde); color:var(--branco); border:none; padding:0.55rem; border-radius:4px; font-family:'Inter',sans-serif; font-size:0.78rem; font-weight:600; cursor:pointer; transition:background 0.18s; }
+  .prod-btn:hover { background:var(--verde2); }
+
+  .porque-bg { background:var(--verde-claro); padding:5rem 3rem; }
+  .porque-inner { max-width:1200px; margin:0 auto; }
+  .porque-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:1.5rem; margin-top:2.5rem; }
+  .porque-item { background:var(--branco); border-radius:8px; padding:1.8rem 1.5rem; border:1px solid var(--borda); }
+  .porque-icon { font-size:1.8rem; margin-bottom:1rem; }
+  .porque-titulo { font-family:'Syne',sans-serif; font-size:1rem; font-weight:700; color:var(--verde); margin-bottom:0.5rem; }
+  .porque-texto { font-size:0.82rem; color:#666; line-height:1.6; }
+
+  .contato-cards { display:grid; grid-template-columns:repeat(auto-fill, minmax(240px, 1fr)); gap:1.25rem; }
+  .contato-card { background:var(--verde-claro); border:1.5px solid var(--borda); border-radius:8px; padding:1.6rem 1.5rem; display:flex; align-items:flex-start; gap:1rem; }
+  .contato-card .ico { font-size:1.5rem; min-width:32px; margin-top:2px; }
+  .contato-card strong { font-size:0.7rem; display:block; color:var(--verde); font-weight:700; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:0.3rem; }
+  .contato-card span, .contato-card a { font-size:0.88rem; color:#444; line-height:1.55; text-decoration:none; }
+  .contato-card a:hover { color:var(--verde); text-decoration:underline; }
+
+  footer { background:var(--verde); color:rgba(255,255,255,0.65); text-align:center; padding:2rem 3rem; font-size:0.82rem; line-height:1.8; }
+  footer strong { color:var(--branco); }
+  footer a { color:#A5D6A7; text-decoration:none; }
+
+  @media (max-width:768px) {
+    nav { padding:0 1.5rem; }
+    .nav-links { display:none; }
+    .hero { grid-template-columns:1fr; padding:3rem 1.5rem; min-height:auto; }
+    .hero-visual { display:none; }
+    .secao { padding:3.5rem 1.5rem; }
+    .porque-bg { padding:3.5rem 1.5rem; }
+    .numeros { padding:2rem 1rem; }
+    .contato-cards { grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">avante<span>pack</span></div>
+  <ul class="nav-links">
+    <li><a href="#produtos">Produtos</a></li>
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#contato">Contato</a></li>
+    <li><a href="#contato" class="nav-cta">Solicitar orçamento</a></li>
+  </ul>
+</nav>
+
+<div class="hero">
+  <div class="hero-texto">
+    <div class="hero-badge">🛒 Descartáveis, limpeza, mercearia e muito mais</div>
+    <h1>Tudo que seu<br>negócio precisa<br><em>num só lugar</em></h1>
+    <p>Copos, talheres, sacolas, guardanapos, canudos, produtos de limpeza, higiene, mercearia, papelaria e elétrica — com agilidade e qualidade em São Paulo.</p>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-grid-boxes">
+      <div class="hbox"><span class="emoji">🥤</span><span class="label">Descartáveis</span></div>
+      <div class="hbox"><span class="emoji">🛍️</span><span class="label">Sacolas</span></div>
+      <div class="hbox"><span class="emoji">🧹</span><span class="label">Limpeza</span></div>
+      <div class="hbox"><span class="emoji">🛒</span><span class="label">Mercearia</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="numeros">
+  <div class="num-item"><span class="num-val">10+</span><span class="num-label">categorias de produtos</span></div>
+  <div class="num-item"><span class="num-val">500+</span><span class="num-label">clientes atendidos</span></div>
+  <div class="num-item"><span class="num-val">SP</span><span class="num-label">Vila Monumento</span></div>
+  <div class="num-item"><span class="num-val">B2B</span><span class="num-label">atacado e varejo</span></div>
+</div>
+
+<section class="secao" id="produtos">
+  <div class="sec-label">Catálogo</div>
+  <h2 class="sec-titulo">Nossos produtos</h2>
+  <p class="sec-desc">Atendemos restaurantes, mercados, escritórios e comércios em geral. Produtos disponíveis em diversas quantidades, do varejo ao atacado.</p>
+  <div class="filtros" id="filtros">
+    <button class="filtro-btn ativo" data-cat="todos">Todos</button>
+    <button class="filtro-btn" data-cat="descartaveis">Descartáveis</button>
+    <button class="filtro-btn" data-cat="sacolas">Sacolas & Sacos</button>
+    <button class="filtro-btn" data-cat="limpeza">Limpeza</button>
+    <button class="filtro-btn" data-cat="higiene">Higiene</button>
+    <button class="filtro-btn" data-cat="mercearia">Mercearia</button>
+    <button class="filtro-btn" data-cat="papelaria">Papelaria</button>
+    <button class="filtro-btn" data-cat="eletrica">Elétrica</button>
+  </div>
+  <div class="produtos-grid" id="produtos-grid"></div>
+</section>
+
+<div class="porque-bg" id="sobre">
+  <div class="porque-inner">
+    <div class="sec-label">Por que escolher a Avantepack</div>
+    <h2 class="sec-titulo">Qualidade e agilidade<br>em cada entrega</h2>
+    <div class="porque-grid">
+      <div class="porque-item">
+        <div class="porque-icon">🚚</div>
+        <div class="porque-titulo">Entrega rápida</div>
+        <p class="porque-texto">Estoque pronto para envio imediato. Atendemos São Paulo e região com agilidade.</p>
+      </div>
+      <div class="porque-item">
+        <div class="porque-icon">📦</div>
+        <div class="porque-titulo">Variedade completa</div>
+        <p class="porque-texto">Mais de 10 categorias de produtos para atender seu negócio do início ao fim.</p>
+      </div>
+      <div class="porque-item">
+        <div class="porque-icon">📋</div>
+        <div class="porque-titulo">Orçamento sem compromisso</div>
+        <p class="porque-texto">Atendimento consultivo e orçamento gratuito. Sem burocracia.</p>
+      </div>
+      <div class="porque-item">
+        <div class="porque-icon">✅</div>
+        <div class="porque-titulo">Qualidade garantida</div>
+        <p class="porque-texto">Produtos de qualidade com preço justo para comércios de todos os tamanhos.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="secao" id="contato">
+  <div class="sec-label">Fale conosco</div>
+  <h2 class="sec-titulo">Entre em contato</h2>
+  <p class="sec-desc">Atendemos do pequeno comércio à grande empresa. Fale com a gente pelo canal de sua preferência.</p>
+  <div class="contato-cards">
+    <div class="contato-card">
+      <div class="ico">📍</div>
+      <div>
+        <strong>Endereço</strong>
+        <span>Av. Dom Pedro I, 813 — Vila Monumento<br>São Paulo — SP, 01552-001</span>
+      </div>
+    </div>
+    <div class="contato-card">
+      <div class="ico">✉️</div>
+      <div>
+        <strong>E-mail</strong>
+        <span><a href="mailto:avantepackdescartaveis@gmail.com">avantepackdescartaveis@gmail.com</a></span>
+      </div>
+    </div>
+    <div class="contato-card">
+      <div class="ico">📸</div>
+      <div>
+        <strong>Instagram</strong>
+        <span><a href="https://instagram.com/avantepack" target="_blank">@avantepack</a></span>
+      </div>
+    </div>
+    <div class="contato-card">
+      <div class="ico">🕐</div>
+      <div>
+        <strong>Horário de atendimento</strong>
+        <span>Seg a Sex: 8h às 18h<br>Sáb: 8h às 13h</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <strong>Avantepack Descartáveis</strong><br>
+  Av. Dom Pedro I, 813 — Vila Monumento, São Paulo — SP<br>
+  <a href="mailto:avantepackdescartaveis@gmail.com">avantepackdescartaveis@gmail.com</a> ·
+  <a href="https://instagram.com/avantepack" target="_blank">@avantepack</a><br>
+  © 2026 Avantepack. Todos os direitos reservados.
+</footer>
+
+<script>
+const produtos = [
+  // DESCARTÁVEIS
+  { cat:"descartaveis", emoji:"🥤", tag:"Descartáveis", nome:"Copos Descartáveis", desc:"Copos plásticos e de papel em diversos tamanhos — 50ml, 150ml, 200ml, 300ml e 500ml." },
+  { cat:"descartaveis", emoji:"🍴", tag:"Descartáveis", nome:"Talheres Descartáveis", desc:"Garfos, facas, colheres e kits completos em plástico resistente." },
+  { cat:"descartaveis", emoji:"🧻", tag:"Descartáveis", nome:"Guardanapos", desc:"Guardanapos de papel simples e duplos, em pacotes e caixas para food service." },
+  { cat:"descartaveis", emoji:"🥤", tag:"Descartáveis", nome:"Canudos", desc:"Canudos plásticos e de papel biodegradável, retos e flexíveis, em diversas cores." },
+  { cat:"descartaveis", emoji:"🍱", tag:"Descartáveis", nome:"Marmitas Descartáveis", desc:"Embalagens para alimentos quentes e frios com tampa travável, em alumínio e plástico." },
+  { cat:"descartaveis", emoji:"🍽️", tag:"Descartáveis", nome:"Pratos Descartáveis", desc:"Pratos rasos e fundos em plástico e papel, ideais para festas e restaurantes." },
+
+  // SACOLAS & SACOS
+  { cat:"sacolas", emoji:"🛍️", tag:"Sacolas & Sacos", nome:"Sacolas Plásticas", desc:"Sacolas de alta e baixa densidade em vários tamanhos, com e sem alça." },
+  { cat:"sacolas", emoji:"🟤", tag:"Sacolas & Sacos", nome:"Sacolas Kraft", desc:"Sacolas de papel kraft com alça torcida, visual premium para varejo e presentes." },
+  { cat:"sacolas", emoji:"🗑️", tag:"Sacolas & Sacos", nome:"Sacos para Lixo", desc:"Sacos de lixo preto, branco e colorido de 15L a 200L, em rolos e pacotes." },
+  { cat:"sacolas", emoji:"🧊", tag:"Sacolas & Sacos", nome:"Sacos Plásticos p/ Alimentos", desc:"Sacos transparentes para armazenamento e congelamento de alimentos." },
+
+  // LIMPEZA
+  { cat:"limpeza", emoji:"🧹", tag:"Limpeza", nome:"Vassouras e Rodos", desc:"Vassouras, rodos e mops para uso doméstico e comercial." },
+  { cat:"limpeza", emoji:"🧽", tag:"Limpeza", nome:"Esponjas e Esfregões", desc:"Esponjas dupla face, esponja de aço e esfregões para cozinha e banheiro." },
+  { cat:"limpeza", emoji:"🪣", tag:"Limpeza", nome:"Detergente e Desengordurante", desc:"Detergente líquido, desengordurante e limpa-vidros em embalagens variadas." },
+  { cat:"limpeza", emoji:"💧", tag:"Limpeza", nome:"Água Sanitária e Alvejante", desc:"Água sanitária, alvejante e produtos para desinfecção de ambientes." },
+  { cat:"limpeza", emoji:"🪥", tag:"Limpeza", nome:"Panos e Flanelas", desc:"Panos multiuso, flanelas e panos de prato em pacotes para uso profissional." },
+
+  // HIGIENE
+  { cat:"higiene", emoji:"🧴", tag:"Higiene", nome:"Sabonete Líquido", desc:"Sabonete líquido refil e frasco para lavatórios e dispensers." },
+  { cat:"higiene", emoji:"🧻", tag:"Higiene", nome:"Papel Higiênico", desc:"Papel higiênico folha simples e dupla, em pacotes e fardos para uso comercial." },
+  { cat:"higiene", emoji:"🖐️", tag:"Higiene", nome:"Papel Toalha", desc:"Papel toalha interfolha e em rolo para banheiros e cozinhas industriais." },
+  { cat:"higiene", emoji:"💊", tag:"Higiene", nome:"Álcool Gel e Antisséptico", desc:"Álcool gel 70%, álcool líquido e antisséptico em diversas embalagens." },
+
+  // MERCEARIA
+  { cat:"mercearia", emoji:"🧂", tag:"Mercearia", nome:"Temperos e Condimentos", desc:"Sal, açúcar, azeite, vinagre e condimentos para uso doméstico e food service." },
+  { cat:"mercearia", emoji:"☕", tag:"Mercearia", nome:"Café, Chá e Achocolatado", desc:"Café em pó, sachês de chá e achocolatado em embalagens avulsas e por caixa." },
+  { cat:"mercearia", emoji:"🫙", tag:"Mercearia", nome:"Conservas e Enlatados", desc:"Milho, ervilha, extrato de tomate, sardinha e outros enlatados para revenda." },
+  { cat:"mercearia", emoji:"🍜", tag:"Mercearia", nome:"Massas e Grãos", desc:"Macarrão, arroz, feijão e outros grãos em embalagens para revenda." },
+
+  // PAPELARIA
+  { cat:"papelaria", emoji:"📋", tag:"Papelaria", nome:"Blocos e Cadernos", desc:"Blocos de anotação, cadernos, agendas e pranchetas para escritório e escola." },
+  { cat:"papelaria", emoji:"✏️", tag:"Papelaria", nome:"Canetas e Lápis", desc:"Canetas esferográficas, lápis, borrachas e marcadores em caixas." },
+  { cat:"papelaria", emoji:"📎", tag:"Papelaria", nome:"Materiais de Escritório", desc:"Clipes, grampos, fitas adesivas, tesouras, réguas e organizadores." },
+  { cat:"papelaria", emoji:"🖨️", tag:"Papelaria", nome:"Papel Sulfite A4", desc:"Resmas de papel A4 75g e 90g para impressoras e copiadoras." },
+
+  // ELÉTRICA
+  { cat:"eletrica", emoji:"💡", tag:"Elétrica", nome:"Lâmpadas LED", desc:"Lâmpadas LED em diversos formatos e potências para ambientes comerciais e residenciais." },
+  { cat:"eletrica", emoji:"🔌", tag:"Elétrica", nome:"Tomadas e Interruptores", desc:"Tomadas, interruptores e espelhos para instalações elétricas." },
+  { cat:"eletrica", emoji:"🔋", tag:"Elétrica", nome:"Pilhas e Baterias", desc:"Pilhas AA, AAA, C e D de marcas confiáveis, em cartelas e caixas." },
+  { cat:"eletrica", emoji:"🔦", tag:"Elétrica", nome:"Extensões e Réguas", desc:"Extensões elétricas, réguas com filtro de linha e adaptadores para uso geral." },
+];
+
+function render(cat) {
+  const lista = cat === 'todos' ? produtos : produtos.filter(p => p.cat === cat);
+  document.getElementById('produtos-grid').innerHTML = lista.map(p => `
+    <div class="prod-card">
+      <div class="prod-topo">${p.emoji}</div>
+      <div class="prod-corpo">
+        <div class="prod-tag">${p.tag}</div>
+        <div class="prod-nome">${p.nome}</div>
+        <p class="prod-desc">${p.desc}</p>
+        <button class="prod-btn" onclick="document.getElementById('contato').scrollIntoView({behavior:'smooth'})">Solicitar orçamento</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+document.getElementById('filtros').addEventListener('click', e => {
+  if (!e.target.matches('.filtro-btn')) return;
+  document.querySelectorAll('.filtro-btn').forEach(b => b.classList.remove('ativo'));
+  e.target.classList.add('ativo');
+  render(e.target.dataset.cat);
+});
+
+render('todos');
+</script>
+
+</body>
+</html>
